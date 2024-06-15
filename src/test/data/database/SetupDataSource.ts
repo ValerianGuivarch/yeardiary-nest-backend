@@ -15,7 +15,7 @@ import { AddSettings1698993525000 } from '../../../main/data/database/migrations
 import { AddItems1702544225000 } from '../../../main/data/database/migrations/1702544225000-add-items'
 import { Skills1703068337272 } from '../../../main/data/database/migrations/1703068337272-skills'
 import { Battle1703177293144 } from '../../../main/data/database/migrations/1703177293144-battle'
-import { DBRace } from '../../../main/data/database/races/DBRace'
+import { DBDiary } from '../../../main/data/database/diaries/DBDiary'
 import { DBSetting } from '../../../main/data/database/settings/DBSetting'
 import { DBSettingProvider } from '../../../main/data/database/settings/DBSettingProvider'
 import { DBSkill } from '../../../main/data/database/skills/DBSkill'
@@ -41,7 +41,7 @@ export const getDataSourceAndContainer = async (): Promise<{
       DBCharacter,
       DBCharacterClasse,
       DBClasse,
-      DBRace,
+      DBDiary,
       DBAuthenticationMethod,
       DBAuthenticationWithGoogle,
       DBAuthenticationWithPassword,

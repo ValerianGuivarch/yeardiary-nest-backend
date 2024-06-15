@@ -7,7 +7,7 @@ import { DBClasseSkill } from '../../../../main/data/database/classes_skills/DBC
 import { DBGuild } from '../../../../main/data/database/guilds/DBGuild'
 import { DBGuildMember } from '../../../../main/data/database/guilds_members/DBGuildMember'
 import { DBItem } from '../../../../main/data/database/items/DBItem'
-import { DBRace } from '../../../../main/data/database/races/DBRace'
+import { DBDiary } from '../../../../main/data/database/diaries/DBDiary'
 import { DBSkill } from '../../../../main/data/database/skills/DBSkill'
 import { DBSkillMagical } from '../../../../main/data/database/skills/DBSkillMagical'
 import { DBSkillPhysical } from '../../../../main/data/database/skills/DBSkillPhysical'
@@ -40,7 +40,7 @@ describe('DBCharacterProvider', () => {
     datasource = result.datasource
     container = result.container
     const characterRepository = datasource.getRepository(DBCharacter)
-    const raceRepository = datasource.getRepository(DBRace)
+    const raceRepository = datasource.getRepository(DBDiary)
     const accountRepository = datasource.getRepository(DBAccount)
     const characterClasseRepository = datasource.getRepository(DBCharacterClasse)
     const classeRepository = datasource.getRepository(DBClasse)
@@ -55,7 +55,7 @@ describe('DBCharacterProvider', () => {
       providers: [
         DBCharacterProvider,
         { provide: getRepositoryToken(DBCharacter), useValue: characterRepository },
-        { provide: getRepositoryToken(DBRace), useValue: raceRepository },
+        { provide: getRepositoryToken(DBDiary), useValue: raceRepository },
         { provide: getRepositoryToken(DBCharacterClasse), useValue: characterClasseRepository },
         { provide: getRepositoryToken(DBClasse), useValue: classeRepository },
         { provide: getRepositoryToken(DBGuild), useValue: guildRepository },
@@ -78,7 +78,7 @@ describe('DBCharacterProvider', () => {
     await datasource.getRepository(DBClasse).delete({})
     await datasource.getRepository(DBGuild).delete({})
     await datasource.getRepository(DBCharacter).delete({})
-    await datasource.getRepository(DBRace).delete({})
+    await datasource.getRepository(DBDiary).delete({})
     await datasource.getRepository(DBAccount).delete({})
     await datasource.getRepository(DBItem).delete({})
   })
@@ -97,7 +97,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = {
         ...TestCharacterHelpers.generateCharacterToCreate(),
         linkedAccount: {
@@ -118,7 +118,7 @@ describe('DBCharacterProvider', () => {
     it('should not create if there is no related account and throw error', async () => {
       // GIVEN
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = { ...TestCharacterHelpers.generateCharacterToCreate(), raceId: race.id }
 
       // WHEN - THEN
@@ -140,7 +140,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save(character)
 
@@ -158,7 +158,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const invoker = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save(invoker)
       const character = {
@@ -182,7 +182,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const classe1 = TestClasseHelpers.generateDBClasse()
       const classe2 = TestClasseHelpers.generateDBClasse()
       await datasource.getRepository(DBClasse).save([classe1, classe2])
@@ -221,7 +221,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const guild1 = TestGuildHelpers.generateDBGuild()
       const guild2 = TestGuildHelpers.generateDBGuild()
       await datasource.getRepository(DBGuild).save([guild1, guild2])
@@ -247,7 +247,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
 
       // WHEN - THEN
@@ -267,7 +267,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character1 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'A' }
       const character2 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'B' }
       const character3 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'C' }
@@ -302,7 +302,7 @@ describe('DBCharacterProvider', () => {
       const account2 = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save([account, account2])
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character1 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'A' }
       const character2 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'B' }
       const character3 = { ...TestCharacterHelpers.generateDBCharacter({ account: account, race: race }), name: 'C' }
@@ -333,7 +333,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character1 = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       const character2 = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       const character3 = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
@@ -355,7 +355,7 @@ describe('DBCharacterProvider', () => {
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
       const race2 = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save([race, race2])
+      await datasource.getRepository(DBDiary).save([race, race2])
       const invoker = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save([character, invoker])
@@ -376,7 +376,7 @@ describe('DBCharacterProvider', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       const character2 = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save(character)

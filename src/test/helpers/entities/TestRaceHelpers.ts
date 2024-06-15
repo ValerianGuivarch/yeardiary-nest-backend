@@ -1,6 +1,6 @@
-import { DBRace } from '../../../main/data/database/races/DBRace'
-import { Race, RaceToCreate } from '../../../main/domain/models/races/Race'
-import { Size } from '../../../main/domain/models/races/Size'
+import { DBDiary } from '../../../main/data/database/diaries/DBDiary'
+import { Diary, RaceToCreate } from '../../../main/domain/models/diaries/Diary'
+import { Size } from '../../../main/domain/models/diaries/Size'
 import { Chance } from 'chance'
 
 export class TestRaceHelpers {
@@ -14,7 +14,7 @@ export class TestRaceHelpers {
     }
   }
 
-  static generateRace(): Race {
+  static generateRace(): Diary {
     return {
       id: this.chance.guid(),
       name: this.chance.string(),
@@ -23,7 +23,7 @@ export class TestRaceHelpers {
     }
   }
 
-  static generateDBRace(): DBRace {
+  static generateDBRace(): DBDiary {
     return {
       createdDate: this.chance.date(),
       updatedDate: this.chance.date(),

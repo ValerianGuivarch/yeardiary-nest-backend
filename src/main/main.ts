@@ -45,19 +45,8 @@ async function bootstrap() {
     }
   })
 
-  /*const agent = createAgent({
-    authSecret: configService.get('FOREST_AUTH_SECRET'),
-    envSecret: configService.get('FOREST_ENV_SECRET'),
-    isProduction: configService.get('NODE_ENV') === 'production',
-    typingsPath: './typings.ts',
-    typingsMaxDepth: 5
-  })
-    // Create your SQL datasource
-    .addDataSource(createSqlDataSource(configService.get('DB_URI')))
-  await agent.mountOnNestJs(app).start()*/
-
   app.enableCors({
-    origin: [config().cors.forestAdmin, config().cors.backoffice],
+    origin: [config().cors.backoffice],
     credentials: true
   })
 

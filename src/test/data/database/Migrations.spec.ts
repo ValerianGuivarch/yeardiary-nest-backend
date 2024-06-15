@@ -7,7 +7,7 @@ import { DBCharacter } from '../../../main/data/database/characters/DBCharacter'
 import { DBClasse } from '../../../main/data/database/classes/DBClasse'
 import { DBGuild } from '../../../main/data/database/guilds/DBGuild'
 import { DBGuildMember } from '../../../main/data/database/guilds_members/DBGuildMember'
-import { DBRace } from '../../../main/data/database/races/DBRace'
+import { DBDiary } from '../../../main/data/database/diaries/DBDiary'
 import { TestAccountHelpers } from '../../helpers/entities/TestAccountHelpers'
 import { TestAuthenticationHelpers } from '../../helpers/entities/TestAuthenticationHelpers'
 import { TestCharacterClasseHelpers } from '../../helpers/entities/TestCharacterClasseHelpers'
@@ -78,8 +78,8 @@ describe('Migrations', () => {
   describe('DBRace', () => {
     it('should be able to create example object', async () => {
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
-      const insertedRace = await datasource.getRepository(DBRace).findOneBy({ id: race.id })
+      await datasource.getRepository(DBDiary).save(race)
+      const insertedRace = await datasource.getRepository(DBDiary).findOneBy({ id: race.id })
 
       expect(insertedRace).toEqual(race)
     })
@@ -108,7 +108,7 @@ describe('Migrations', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
 
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
 
@@ -124,7 +124,7 @@ describe('Migrations', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save(character)
       const guild = TestGuildHelpers.generateDBGuild()
@@ -145,7 +145,7 @@ describe('Migrations', () => {
       const account = TestAccountHelpers.generateDBAccount()
       await datasource.getRepository(DBAccount).save(account)
       const race = TestRaceHelpers.generateDBRace()
-      await datasource.getRepository(DBRace).save(race)
+      await datasource.getRepository(DBDiary).save(race)
       const character = TestCharacterHelpers.generateDBCharacter({ account: account, race: race })
       await datasource.getRepository(DBCharacter).save(character)
       const classe = TestClasseHelpers.generateDBClasse()

@@ -1,7 +1,7 @@
 import { TestRaceHelpers } from './TestRaceHelpers'
 import { DBAccount } from '../../../main/data/database/accounts/DBAccount'
 import { DBCharacter } from '../../../main/data/database/characters/DBCharacter'
-import { DBRace } from '../../../main/data/database/races/DBRace'
+import { DBDiary } from '../../../main/data/database/diaries/DBDiary'
 import { Character, CharacterToCreate, CharacterToUpdate } from '../../../main/domain/models/characters/Character'
 import { Chance } from 'chance'
 
@@ -55,7 +55,7 @@ export class TestCharacterHelpers {
     }
   }
 
-  static generateDBCharacter(linkedEntities: { account: DBAccount; race: DBRace }): DBCharacter {
+  static generateDBCharacter(linkedEntities: { account: DBAccount; race: DBDiary }): DBCharacter {
     return {
       account: undefined,
       accountId: linkedEntities.account.id,
