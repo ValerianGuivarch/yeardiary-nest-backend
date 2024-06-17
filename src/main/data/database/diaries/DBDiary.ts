@@ -1,30 +1,30 @@
-import { Diary } from '../../../domain/models/diaries/Diary'
-import { CreateDateColumn, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Diary } from '../../../domain/models/diaries/Diary';
+import { CreateDateColumn, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'Diary' })
 export class DBDiary {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
-  @CreateDateColumn({ default: () => 'NOW()' })
-  createdDate: Date
+  @CreateDateColumn({ type: 'datetime', default: () => "datetime('now')" })
+  createdDate: Date;
 
-  @UpdateDateColumn({ default: () => 'NOW()' })
-  updatedDate: Date
+  @UpdateDateColumn({ type: 'datetime', default: () => "datetime('now')" })
+  updatedDate: Date;
 
-  @Column({ nullable: false })
-  text: string
-
-  @Column({ nullable: false })
-  day: number
+  @Column({ nullable: false, default: '' })
+  text: string;
 
   @Column({ nullable: false })
-  month: number
+  day: number;
 
   @Column({ nullable: false })
-  year: number
+  month: number;
 
-  static readonly RELATIONS = {}
+  @Column({ nullable: false })
+  year: number;
+
+  static readonly RELATIONS = {};
 
   static toDiary(dbDiary: DBDiary): Diary {
     return new Diary({
@@ -34,9 +34,9 @@ export class DBDiary {
       month: dbDiary.month,
       year: dbDiary.year,
       lastUpdate: dbDiary.updatedDate
-    })
+    });
   }
 }
 
-export type DBDiaryToCreate = Omit<DBDiary, 'id'>
-export type DBDiaryToUpdate = Omit<DBDiary, 'id' | 'createdDate'>
+export type DBDiaryToCreate = Omit<DBDiary, 'id'>;
+export type DBDiaryToUpdate = Omit<DBDiary, 'id' | 'createdDate'>;

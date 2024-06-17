@@ -1,5 +1,5 @@
 import config from './config/configuration'
-import { PostgresModule } from './data/database/postgres.module'
+import { SQLiteModule } from './data/database/sqlite.module'
 import { DiaryService } from './domain/services/entities/diaries/DiaryService'
 import { DiaryController } from './web/http/api/v1/diaries/DiaryController'
 import { FastifyMulterModule } from '@nest-lab/fastify-multer'
@@ -12,14 +12,10 @@ import { ConfigModule } from '@nestjs/config'
       isGlobal: true,
       load: [config]
     }),
-    PostgresModule,
+    SQLiteModule,
     FastifyMulterModule
   ],
-  controllers: [
-    DiaryController
-  ],
-  providers: [
-    DiaryService
-  ]
+  controllers: [DiaryController],
+  providers: [DiaryService]
 })
 export class AppModule {}

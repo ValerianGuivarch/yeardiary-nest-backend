@@ -18,4 +18,12 @@ export class DiaryService {
   async updateDiary(p: { diaryId: string; diaryToUpdate: Partial<DiaryToUpdate> }): Promise<Diary> {
     return await this.diaryProvider.update({ diaryId: p.diaryId, diary: p.diaryToUpdate })
   }
+
+  async findAllMissingEntries(): Promise<{
+    day: number
+    month: number
+    year: number
+  }[]> {
+    return await this.diaryProvider.findAllMissingEntries()
+  }
 }

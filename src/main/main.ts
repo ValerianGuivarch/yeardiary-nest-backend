@@ -46,7 +46,7 @@ async function bootstrap() {
   })
 
   app.enableCors({
-    origin: [config().cors.backoffice],
+    origin: [config().cors.frontend],
     credentials: true
   })
 

@@ -15,17 +15,11 @@ export default () => ({
     host: env.HOST || '0.0.0.0',
     port: parseInt(env.PORT || '3000', 10)
   },
-  postgres: {
-    host: env.DB_HOST || '127.0.0.1',
-    port: env.DB_PORT ? parseInt(env.DB_PORT, 10) : 5432,
-    username: env.DB_USER || 'postgres',
-    password: env.DB_PASSWORD || 'postgres',
-    database: env.DB_NAME || 'starter-database',
+  sqlite: {
+    database: 'database.sqlite',
     autoLoadEntities: true,
-    synchronize: true
   },
   cors: {
-    forestAdmin: env.CORS_FOREST_ADMIN || 'https://app.forestadmin.com',
-    backoffice: env.CORS_NEREVA_BACKOFFICE || 'http://127.0.0.1:3000'
+    frontend: env.FRONTEND_URL || 'http://127.0.0.1:3000'
   },
 })

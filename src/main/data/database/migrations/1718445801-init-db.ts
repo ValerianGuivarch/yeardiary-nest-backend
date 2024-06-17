@@ -1,6 +1,6 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table, TableColumn } from 'typeorm';
 
-export class InitDb1718445801 implements MigrationInterface {
+export class InitDb1634567890123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Diary
     await queryRunner.createTable(
@@ -9,24 +9,24 @@ export class InitDb1718445801 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true,
-            default: 'uuid_generate_v4()'
+            default: "lower(hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' || substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4) , 1) || substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))"
           },
           {
             name: 'createdDate',
-            type: 'timestamp',
-            default: 'NOW()'
+            type: 'datetime',
+            default: "datetime('now')"
           },
           {
             name: 'updatedDate',
-            type: 'timestamp',
-            default: 'NOW()'
+            type: 'datetime',
+            default: "datetime('now')"
           },
           {
             name: 'text',
             type: 'varchar',
-            default: ''
+            default: "''"
           },
           {
             name: 'day',
@@ -43,11 +43,11 @@ export class InitDb1718445801 implements MigrationInterface {
         ]
       }),
       true
-    )
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     // Drop tables
-    await queryRunner.dropTable('Diary', true)
+    await queryRunner.dropTable('Diary', true);
   }
 }

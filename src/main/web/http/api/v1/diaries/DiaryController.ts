@@ -68,4 +68,18 @@ export class DiaryController {
       })
     )
   }
+
+  @ApiOkResponse({
+    description: 'Get all missing entries',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('/missing')
+  async findAllMissingEntries(): Promise<{
+    day: number
+    month: number
+    year: number
+  }[]> {
+    const missingEntries = await this.diaryService.findAllMissingEntries()
+    return missingEntries.map(DiaryVM.from)
+  }
 }
