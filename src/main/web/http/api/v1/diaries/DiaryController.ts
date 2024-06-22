@@ -1,12 +1,12 @@
 import { DiaryVM, DiaryVMExample } from './entities/DiaryVM'
 import { CreateDiaryRequest } from './requests/CreateDiaryRequest'
+import { GetDiaryRequest } from './requests/GetDiaryRequest'
 import { UpdateDiaryRequest } from './requests/UpdateDiaryRequest'
 import { Diary } from '../../../../../domain/models/diaries/Diary'
 import { DiaryService } from '../../../../../domain/services/entities/diaries/DiaryService'
 import { generatePageResponseContent } from '../../utils/swagger'
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { GetDiaryRequest } from './requests/GetDiaryRequest'
 
 @Controller('api/v1/diaries')
 @ApiTags('Diaries')
@@ -70,15 +70,17 @@ export class DiaryController {
   }
 
   @ApiOkResponse({
-    description: 'Get all missing entries',
+    description: 'Get all missing entries'
   })
   @HttpCode(HttpStatus.OK)
   @Get('/missing')
-  async findAllMissingEntries(): Promise<{
-    day: number
-    month: number
-    year: number
-  }[]> {
+  async findAllMissingEntries(): Promise<
+    {
+      day: number
+      month: number
+      year: number
+    }[]
+  > {
     const missingEntries = await this.diaryService.findAllMissingEntries()
     return missingEntries.map(DiaryVM.from)
   }

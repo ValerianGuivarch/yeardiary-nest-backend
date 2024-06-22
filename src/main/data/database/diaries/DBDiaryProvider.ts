@@ -4,8 +4,8 @@ import { IDiaryProvider } from '../../../domain/providers/diaries/IDiaryProvider
 import { ProviderErrors } from '../../errors/ProviderErrors'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 import { eachDayOfInterval } from 'date-fns'
+import { Repository } from 'typeorm'
 
 @Injectable()
 export class DBDiaryProvider implements IDiaryProvider {
@@ -63,39 +63,42 @@ export class DBDiaryProvider implements IDiaryProvider {
       }
     })
     return res.map(DBDiary.toDiary)
-  }i
+  }
+  i
 
-async findAllMissingEntries(): Promise<{ day: number; month: number; year: number }[]> {
-  const res = await this.diaryRepository.find({
-    select: ['day', 'month', 'year']
-  });
+  async findAllMissingEntries(): Promise<{ day: number; month: number; year: number }[]> {
+    const res = await this.diaryRepository.find({
+      select: ['day', 'month', 'year']
+    })
 
-  // Générer la liste complète des triplets day/month/year du 1er janvier 2020 à aujourd'hui
-  const startDate = new Date(2020, 0, 1); // 1er janvier 2020
-  const endDate = new Date(); // Aujourd'hui
+    // Générer la liste complète des triplets day/month/year du 1er janvier 2020 à aujourd'hui
+    const startDate = new Date(2020, 0, 1) // 1er janvier 2020
+    const today = new Date() // Aujourd'hui
+    const yesterday = today.setDate(today.getDate() - 1)
 
-  const allDates = eachDayOfInterval({ start: startDate, end: endDate });
+    const allDates = eachDayOfInterval({ start: startDate, end: yesterday })
 
-  const allDays = allDates.map(date => ({
-    day: date.getDate(),
-    month: date.getMonth() + 1,
-    year: date.getFullYear()
-  }));
+    const allDays = allDates.map((date) => ({
+      day: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear()
+    }))
 
-  const existingEntries = res.map(r => ({
-    day: r.day,
-    month: r.month,
-    year: r.year
-  }));
+    const existingEntries = res.map((r) => ({
+      day: r.day,
+      month: r.month,
+      year: r.year
+    }))
 
-  // Retirer les triplets présents dans la base de données de la liste complète des triplets
-  const missingEntries = allDays.filter(dayEntry =>
-    !existingEntries.some(dbEntry =>
-      dbEntry.day === dayEntry.day && dbEntry.month === dayEntry.month && dbEntry.year === dayEntry.year
+    // Retirer les triplets présents dans la base de données de la liste complète des triplets
+    const missingEntries = allDays.filter(
+      (dayEntry) =>
+        !existingEntries.some(
+          (dbEntry) =>
+            dbEntry.day === dayEntry.day && dbEntry.month === dayEntry.month && dbEntry.year === dayEntry.year
+        )
     )
-  );
 
-  return missingEntries;
-}
-
+    return missingEntries
+  }
 }
